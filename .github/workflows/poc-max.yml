@@ -1,0 +1,52 @@
+name: Cachte-It!
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+
+jobs:
+  poc:
+    runs-on: ubuntu-latest
+    steps:
+      # disabled login as it leaves plain text credentials behind
+
+      # - name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+
+      - name: Get Date
+        id: get-date
+        run: |
+          echo "::set-output name=date::$(/bin/date -u "+%Y%m%d")"
+        shell: bash
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ steps.get-date.outputs.date }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build
+        uses: docker/build-push-action@v2
+        with:
+          push: false
+          tags: valentijn/app:latest
+          builder: ${{ steps.buildx.outputs.name }}
+          file: ./Dockerfile
+          context: .
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+
+      - name: Up
+        # run: DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up --no-build --no-deps  --exit-code-from app app
+        run: docker-compose up
