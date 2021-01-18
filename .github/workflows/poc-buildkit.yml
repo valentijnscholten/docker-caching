@@ -50,8 +50,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Up
-        # run: DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up --no-build
         env:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
-        run: docker-compose up
+        run: docker-compose up --no-build

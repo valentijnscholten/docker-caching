@@ -49,4 +49,4 @@ jobs:
 
       - name: Up
         # run: DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose up --no-build --no-deps  --exit-code-from app app
-        run: docker-compose up
+        run: docker-compose up  --no-build
