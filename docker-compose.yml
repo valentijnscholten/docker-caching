@@ -4,5 +4,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      cache_from: 'valentijn/app:latest'
+      # cache_from: 'valentijn/app:latest'
     image: 'valentijn/app:latest'

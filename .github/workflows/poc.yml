@@ -40,6 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: false
+          load: true
           tags: valentijn/app:latest
           builder: ${{ steps.buildx.outputs.name }}
           file: ./Dockerfile
