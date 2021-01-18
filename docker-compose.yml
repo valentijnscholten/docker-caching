@@ -4,4 +4,4 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: 'valentijn:latest'
+    image: 'valentijn/app:latest'
