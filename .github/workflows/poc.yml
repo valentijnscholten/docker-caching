@@ -1,4 +1,4 @@
-name: Cachte-It!
+name: PoC
 on:
   workflow_dispatch:
   pull_request:
