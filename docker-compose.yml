@@ -1,7 +1,8 @@
 version: "3.9"
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    #   cache_from: 'valentijn/app:latest'
     image: 'valentijn/app:latest'
